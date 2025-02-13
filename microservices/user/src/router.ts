@@ -6,4 +6,4 @@ import { createCustomer } from "./controllers";
 
 export const router = Router();
 
-router.post('/', validateReqBody(UserCreationSchema), createCustomer);
+router.post('/customer', validateReqBody(UserCreationSchema), createCustomer);
