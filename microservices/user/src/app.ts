@@ -21,7 +21,7 @@ const initializeApp = async () => {
         app.use(ErrorHandler);
 
         app.listen(port, () => {
-            logger.info(`App Running Successfully at https://localhost:${port}`);
+            logger.info(`App Running Successfully at http://localhost:${port}`);
         })
     } catch (error) {
         logger.error(`${errorMessage.SERVER_ISSUE}: ${error}`);

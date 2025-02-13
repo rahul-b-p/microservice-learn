@@ -1,24 +1,61 @@
 version: "3.8"
 
 services:
-  mongodb:
-    image: mongo
-    container_name: ${MONGO_DB}
-    restart: always
-    ports:
-      - "${MONGO_PORT}:27017"
-    volumes:
-      - mongodb_data:/data/db
+  user-service:
+    image: user-service
+    container_name: user-service
+    build:
+      context: ./microservices/user
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGODB_URI: ${MONGODB_URI:-mongodb://localhost:27017/userdb}
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: 3000
+    ports:
+      - "5000:3000"
     networks:
-      - my_network
+      - microservices_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  item-service:
+    image: item-service
+    container_name: item-service
+    build:
+      context: ./microservices/item
+    environment:
+      MONGODB_URI: ${MONGODB_URI:-mongodb://localhost:27017/itemdb}
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: 3500
+    ports:
+      - "6000:3500"
+    networks:
+      - microservices_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3500/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  nginx:
+    build:
+      context: ./nginx
+    container_name: nginx-gateway
+    ports:
+      - "8081:80"
+    depends_on:
+      - user-service
+      - item-service
+    networks:
+      - microservices_network
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/index.html:/usr/share/nginx/html/index.html:ro
 
 networks:
-  my_network:
+  microservices_network:
     driver: bridge
-
-volumes:
-  mongodb_data:
-

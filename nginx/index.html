@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microservice Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        section {
+            padding: 20px;
+        }
+
+        .service {
+            background-color: #fff;
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .service h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Microservice Documentation</h1>
+    </header>
+    <section>
+        <h2>API Endpoints</h2>
+
+        <div class="service">
+            <h2>User Service</h2>
+            <p>This service handles user-related operations like login, registration, and user profile management.</p>
+            <ul>
+                <li><strong>GET /users</strong> - Retrieve a list of all users</li>
+                <li><strong>GET /users/{id}</strong> - Get user details by ID</li>
+                <li><strong>POST /users</strong> - Create a new user</li>
+                <li><strong>PUT /users/{id}</strong> - Update user details</li>
+                <li><strong>DELETE /users/{id}</strong> - Delete a user</li>
+            </ul>
+        </div>
+
+        <div class="service">
+            <h2>Item Service</h2>
+            <p>This service manages items such as adding, retrieving, and deleting items.</p>
+            <ul>
+                <li><strong>GET /items</strong> - Retrieve a list of items</li>
+                <li><strong>GET /items/{id}</strong> - Get item details by ID</li>
+                <li><strong>POST /items</strong> - Add a new item</li>
+                <li><strong>PUT /items/{id}</strong> - Update item details</li>
+                <li><strong>DELETE /items/{id}</strong> - Delete an item</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>How to Use</h2>
+        <p>The microservices are deployed and available via the following URLs:</p>
+        <ul>
+            <li><strong>User Service:</strong> http://localhost/users</li>
+            <li><strong>Item Service:</strong> http://localhost/items</li>
+        </ul>
+        <p>For each service, the respective API endpoints are available as mentioned above.</p>
+    </section>
+
+    <section>
+        <h2>System Architecture</h2>
+        <p>This microservice architecture consists of a user service and an item service, which are managed through
+            Nginx as a reverse proxy. The Nginx configuration handles routing requests to the respective services.</p>
+    </section>
+</body>
+
+</html>
